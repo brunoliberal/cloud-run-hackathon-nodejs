@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const max_range = 3;
+const max_range = 4;
 
 app.use(bodyParser.json());
 
@@ -21,10 +21,12 @@ app.post('/', function (req, res) {
   var cur_pos_y = state[my_url].y;
   var cur_dir = state[my_url].direction;
 
-  for (let i = 0; i < state.length; i++) {
-    if (target_available(req, i)) {
-      res.send('T');
-      return;
+  for (const enemy in state) {
+    if (enemy != my_url) {
+        if (target_available(req, enemy)) {
+            res.send('T');
+            return;
+          }
     }
   }
 
